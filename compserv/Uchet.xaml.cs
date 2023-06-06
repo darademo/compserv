@@ -82,12 +82,32 @@ namespace compserv
 
         private void btn_del(object sender, RoutedEventArgs e)
         {
-
+            int selectedinedx = Convert.ToInt32(Plan.Columns[0].GetCellContent(Plan.SelectedItem).Parent.ToString().Remove(0, 38));
+            var row = db.Consumables.Where(w => w.ConsumablesID == selectedinedx).FirstOrDefault();
+            db.Consumables.Remove(row);
+            db.SaveChanges();
+            Update();
+            MessageBox.Show("Данные скрыты");
         }
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Consumables row = new Consumables();
+                row.ConsumablesID = (from v in db.Consumables select v.ConsumablesID).Max() + 1;
+                row.Name = tbx_name.Text;
+                row.Ed_izmer = Convert.ToInt32(tbx_edizmer.Text);
+                row.Colich = Convert.ToInt32(tbx_kolvo.Text);
+                db.Consumables.Add(row);
+                db.SaveChanges();
+                Update();
+                MessageBox.Show("Данные добавлены");
+            }
+            catch
+            {
+                MessageBox.Show("Некорректные данные");
+            }
         }
 
         private void btn_edit(object sender, RoutedEventArgs e)

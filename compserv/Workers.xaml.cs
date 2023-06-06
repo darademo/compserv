@@ -29,10 +29,7 @@ namespace compserv
         public Workers()
         {
             InitializeComponent();
-            string sql = "SELECT EmployID as 'Номер' ,[Lname] as 'Фамилия',[Name] as 'имя',[SurName] as 'отчество',Role as 'роль' FROM [Employ]".ToString();
-            DataTable dataTable = new DataTable();
-            dataTable = Database(sql);
-            Plan.ItemsSource = dataTable.DefaultView;
+            Update();
         }
         public DataTable Database(string sql)
         {
@@ -44,9 +41,13 @@ namespace compserv
             return dataTable;
 
         }
-        private void Plan_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+        private void Update()
         {
-
+            string sql = "SELECT EmployID as 'Номер' ,[Lname] as 'Фамилия',[Name] as 'имя',[SurName] as 'отчество',Role as 'роль' FROM [Employ]".ToString();
+            DataTable dataTable = new DataTable();
+            dataTable = Database(sql);
+            Plan.ItemsSource = dataTable.DefaultView;
         }
         private void Close(object sender, RoutedEventArgs e)
         {
@@ -69,12 +70,44 @@ namespace compserv
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Employ row = new Employ();
+                row.EmployID = (from v in db.Employ select v.EmployID).Max() + 1;
+                row.Lname = tbxFam.Text;
+                row.Name = tbxName.Text;
+                row.SurName = tbxName.Text;
+                if (row.Role == null)
+                { row.Role = " "; }
+                    else
+                { row.Role = tbxRole.Text; }
+                if (row.Login == null)
+                { row.Login = " "; }
+                else
+                { row.Login = tbxLogin.Text; }
+                if (row.Password == null) 
+                { row.Password = " "; }
+                else
+                { row.Password = tbxPass.Text; }
+                db.Employ.Add(row);
+                db.SaveChanges();
+                Update();
+                MessageBox.Show("Данные Добавлены");
+            }
+            catch
+            {
+                MessageBox.Show("Данные введены некорректно");
+            }
         }
 
         private void btn_del(object sender, RoutedEventArgs e)
         {
-
+            int selectedinedx = Convert.ToInt32(Plan.Columns[0].GetCellContent(Plan.SelectedItem).Parent.ToString().Remove(0, 38));
+            var row = db.Employ.Where(w => w.EmployID == selectedinedx).FirstOrDefault();
+            db.Employ.Remove(row);
+            db.SaveChanges();
+            Update();
+            MessageBox.Show("Данные скрыты");
         }
 
         private void btn_ref(object sender, RoutedEventArgs e)

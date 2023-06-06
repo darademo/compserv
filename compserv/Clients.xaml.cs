@@ -58,20 +58,27 @@ namespace compserv
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-            Client row = new Client();
-            row.ClientID = (from v in db.Client select v.ClientID).Max() + 1;
-            row.SurName = tbx_otch.Text;
-            row.Name = tbx_name.Text;
-            row.Lname = tbx_fam.Text;
-            row.PhonNumber = tbx_phone.Text;
-            row.DateBirth = Convert.ToDateTime(tbx_date.Text);
-            row.VidClient = Convert.ToInt32(tbx_vid.Text);
-            row.TypeClient = Convert.ToInt32(tbx_type.Text);
-            row.Adress = tbx_adress.Text;
-            db.Client.Add(row);
-            db.SaveChanges();
-            Update();
-            MessageBox.Show("Данные Добавлены");
+            try
+            {
+                Client row = new Client();
+                row.ClientID = (from v in db.Client select v.ClientID).Max() + 1;
+                row.SurName = tbx_otch.Text;
+                row.Name = tbx_name.Text;
+                row.Lname = tbx_fam.Text;
+                row.PhonNumber = tbx_phone.Text;
+                row.DateBirth = Convert.ToDateTime(tbx_date.Text);
+                row.VidClient = Convert.ToInt32(tbx_vid.Text);
+                row.TypeClient = Convert.ToInt32(tbx_type.Text);
+                row.Adress = tbx_adress.Text;
+                db.Client.Add(row);
+                db.SaveChanges();
+                Update();
+                MessageBox.Show("Данные Добавлены");
+            }
+            catch
+            {
+                MessageBox.Show("Некорректные данные");
+            }
         }
 
         private void btn_del(object sender, RoutedEventArgs e)

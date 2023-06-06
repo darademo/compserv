@@ -21,7 +21,7 @@
         <TextBox x:Name="tbxPass" HorizontalAlignment="Left" Height="23" Margin="45,251,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="120"/>
         <Button Content="Добавить" HorizontalAlignment="Left" Margin="69,279,0,0" VerticalAlignment="Top" Width="75" Click="btn_add"/>
         <Button Content="Удалить" HorizontalAlignment="Left" Margin="69,303,0,0" VerticalAlignment="Top" Width="75" Click="btn_del"/>
-        <DataGrid x:Name="Plan"  HorizontalAlignment="Left" Height="275" Margin="246,80,0,0" VerticalAlignment="Top" Width="504" SelectionChanged="Plan_SelectionChanged"/>
+        <DataGrid x:Name="Plan"  HorizontalAlignment="Left" Height="275" Margin="246,80,0,0" VerticalAlignment="Top" Width="504"/>
         <Button Content="Обновить" HorizontalAlignment="Left" Margin="675,391,0,0" VerticalAlignment="Top" Width="75" Click="btn_ref"/>
 
     </Grid>
