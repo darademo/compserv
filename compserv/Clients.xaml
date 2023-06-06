@@ -1,0 +1,28 @@
+﻿<Window x:Class="compserv.Clients"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:compserv"
+        mc:Ignorable="d"
+        Title="Clients" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="image/background.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Button Click="To_Main" Content="Главная" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="tbx_fam" HorizontalAlignment="Left" Height="23" Margin="10,70,0,0" TextWrapping="Wrap" Text="Фамилия" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_name" HorizontalAlignment="Left" Height="23" Margin="10,98,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_otch" HorizontalAlignment="Left" Height="23" Margin="10,126,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_phone" HorizontalAlignment="Left" Height="23" Margin="10,154,0,0" TextWrapping="Wrap" Text="Номер телефона" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_vid" HorizontalAlignment="Left" Height="23" Margin="10,182,0,0" TextWrapping="Wrap" Text="Вид" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_date" HorizontalAlignment="Left" Height="23" Margin="10,210,0,0" TextWrapping="Wrap" Text="Дата Рождения" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_type" HorizontalAlignment="Left" Height="23" Margin="10,238,0,0" TextWrapping="Wrap" Text="Тип" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_adress" HorizontalAlignment="Left" Height="23" Margin="10,266,0,0" TextWrapping="Wrap" Text="Адрес" VerticalAlignment="Top" Width="120"/>
+        <Button Click="btn_add" Content="Добавить" HorizontalAlignment="Left" Margin="31,294,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Click="btn_del" Content="Удалить" HorizontalAlignment="Left" Margin="31,318,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid x:Name="Plan" HorizontalAlignment="Left" Height="350" Margin="186,38,0,0" VerticalAlignment="Top" Width="582"/>
+        <Button  Click="btn_ref" Content="Обновить" HorizontalAlignment="Left" Margin="31,342,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

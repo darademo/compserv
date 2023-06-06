@@ -1,0 +1,28 @@
+﻿<Window x:Class="compserv.Workers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:compserv"
+        mc:Ignorable="d"
+        Title="Workers" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="image/background.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Button Content="Главная" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="To_Main"/>
+        <Button Content="График" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="To_Grafik"/>
+        <Button Content="X" HorizontalAlignment="Left" Margin="750,10,0,0" VerticalAlignment="Top" Width="34" Click="Close"/>
+        <TextBox x:Name="tbxName" HorizontalAlignment="Left" Height="23" Margin="45,111,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxFam" HorizontalAlignment="Left" Height="23" Margin="45,139,0,0" TextWrapping="Wrap" Text="Фамилия" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxSurname" HorizontalAlignment="Left" Height="23" Margin="45,167,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxRole" HorizontalAlignment="Left" Height="23" Margin="45,195,0,0" TextWrapping="Wrap" Text="Роль" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxLogin" HorizontalAlignment="Left" Height="23" Margin="45,223,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxPass" HorizontalAlignment="Left" Height="23" Margin="45,251,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="69,279,0,0" VerticalAlignment="Top" Width="75" Click="btn_add"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="69,303,0,0" VerticalAlignment="Top" Width="75" Click="btn_del"/>
+        <DataGrid x:Name="Plan"  HorizontalAlignment="Left" Height="275" Margin="246,80,0,0" VerticalAlignment="Top" Width="504" SelectionChanged="Plan_SelectionChanged"/>
+        <Button Content="Обновить" HorizontalAlignment="Left" Margin="675,391,0,0" VerticalAlignment="Top" Width="75" Click="btn_ref"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,57 @@
+редактирование - DGrid (название датагрида), остальное не меняй 
+private void BtnEdit(object sender, RoutedEventArgs e)
+        {
+            DGrid.IsReadOnly = false;
+            if (DGrid.SelectedItem != null)
+            {
+                var cell = DGrid.SelectedCells[0];
+                DGrid.CurrentCell = cell;
+            }
+            else
+            {
+                DGrid.CurrentCell = new DataGridCellInfo
+                    (
+                        DGrid.Items[0],
+                        DGrid.Columns[0]
+                    );
+            }
+            DGrid.BeginEdit();
+
+        }
+
+
+
+
+удаление - DGrid (название датагрида), Sotrudnik(название таблицы), messagebox(можешь удалить или редачь под свои строки с бд), ListSotrudnik(я сюда данные забивал с бд в переменную)
+private void BtnDelete(object sender, RoutedEventArgs e)
+        {
+            Sotrudnik sotru = DGrid.SelectedItem as Sotrudnik;
+            if (sotru != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Удалить пользователя " + sotru.FIO, "Преупреждение", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    bd.Sotrudnik.Remove(sotru);
+                    DGrid.SelectedIndex = DGrid.SelectedIndex == 0 ? 1 : DGrid.SelectedIndex - 1;
+                    ListSotrudnik.Remove(sotru);
+                    bd.SaveChanges();
+                    DGrid.Items.Refresh();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите строку для удаления");
+            }
+            DGrid.Items.Refresh();
+        }
+
+
+
+Сохранение - если ты захочешь DGrid (название датагрида)
+private void BtnSave(object sender, RoutedEventArgs e)
+        {
+            bd.SaveChanges();
+            DGrid.IsReadOnly = true;
+            MessageBox.Show("Данные успешно сохранены в базу данных!");
+            DGrid.Items.Refresh();
+        }

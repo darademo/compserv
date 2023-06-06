@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e8dbbd9f9c2e41a594d5e89ac4421075" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Client" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Consumables" Width="1.5" PointX="8" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Edizmer" Width="1.5" PointX="5.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Employ" Width="1.5" PointX="5.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Grafik" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Invoice" Width="1.5" PointX="8" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Services" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Type_Client" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Uchet_cons" Width="1.5" PointX="10.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Vid_Client" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Visits" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="DBModel.FK_Client_Type_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Client_Vid_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Visits_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Consumables_Edizmer" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Uchet_cons_Consumables" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Grafik_Employ" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Invoice_Employ" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Uchet_cons_Invoice" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Visits_Services" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

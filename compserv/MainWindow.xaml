@@ -1,0 +1,39 @@
+﻿<Window x:Class="compserv.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:compserv"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="image/background.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="50" Source="image/ico.png" Margin="10,10,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="-0.252,0.168"/>
+        <Button Content="X" Click="Close"  HorizontalAlignment="Left" Margin="730,10,0,0" VerticalAlignment="Top" Width="54" />
+        <Button Content="Работники" Click="To_Emp" HorizontalAlignment="Left" Margin="65,25,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Клиенты" Click="To_Clients" HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Учёт" Click="To_Uchet" HorizontalAlignment="Left" Margin="225,25,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Добавить" Click="btn_add" HorizontalAlignment="Left" Margin="15,117,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Редактировать" Click="btn_edit" HorizontalAlignment="Left" Margin="15,149,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Удалить" Click="btn_del" HorizontalAlignment="Left" Margin="15,181,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Content="Обновить" Click="btn_ref" HorizontalAlignment="Left" Margin="15,297,0,0" VerticalAlignment="Top" Width="90"/>
+        <Button Content="В Excel" Click="To_Excel" HorizontalAlignment="Left" Margin="122,297,0,0" VerticalAlignment="Top" Width="90"/>
+        <Button Content="Услуги" Click="Service_click" HorizontalAlignment="Left" Margin="122,338,0,0" VerticalAlignment="Top" Width="90"/>
+        <DataGrid x:Name="Plan" ItemsSource="{Binding}" AutoGenerateColumns="True"
+                  CanUserReorderColumns="True" Visibility="Visible" HorizontalAlignment="Left" 
+                  Height="257" Margin="274,100,0,0" VerticalAlignment="Top" Width="510">
+            <!--<DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding Path=, VisitID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>-->
+        </DataGrid>
+        <TextBox x:Name="tbx_number" HorizontalAlignment="Left" Height="23" Margin="145,113,0,0" TextWrapping="Wrap" Text="Номер клиента" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_date" HorizontalAlignment="Left" Height="23" Margin="145,146,0,0" TextWrapping="Wrap" Text="Дата" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbx_serv" HorizontalAlignment="Left" Height="23" Margin="145,177,0,0" TextWrapping="Wrap" Text="Услуга" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxPoisk"  HorizontalAlignment="Left" Height="19" Margin="465,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239"/>
+        <Button Content="Найти" HorizontalAlignment="Left" Margin="709,391,0,0" VerticalAlignment="Top" Width="75" Click="Poisk"/>
+
+
+    </Grid>
+</Window>
