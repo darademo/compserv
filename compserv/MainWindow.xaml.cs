@@ -17,6 +17,8 @@ using System.Data;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
+using OfficeOpenXml;
 
 namespace compserv
 {
@@ -28,10 +30,10 @@ namespace compserv
 
         DBEntities db = new DBEntities();
         SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=ddbClone;Integrated Security=True");
-        
+
         public class ClassForGrid
         {
-            
+
             public string VisitsID { get; set; }
             public string ClientID { get; set; }
             public string ServisID { get; set; }
@@ -55,7 +57,7 @@ namespace compserv
             InitializeComponent();
             Update();
         }
-        
+
 
         private void Plan_SelectionChanged1(object sender, SelectionChangedEventArgs e)
         {
@@ -75,7 +77,7 @@ namespace compserv
                 tbx_number.Text = row.ClientID.ToString();
                 tbx_serv.Text = row.ServisID.ToString();
                 tbx_date.Text = row.DateVisit.ToString();
-                
+
 
             }
 
@@ -88,7 +90,7 @@ namespace compserv
             adapter.Fill(dataTable);
             con.Close();
             return dataTable;
-            
+
         }
 
         public void Update()
@@ -138,10 +140,10 @@ namespace compserv
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-            try 
+            try
             {
                 Visits row = new Visits();
-                row.VisitsID = (from v in db.Visits select v.VisitsID).Max()+1;
+                row.VisitsID = (from v in db.Visits select v.VisitsID).Max() + 1;
                 row.ClientID = Convert.ToInt32(tbx_number.Text);
                 row.ServisID = Convert.ToInt32(tbx_serv.Text);
                 row.DateVisit = Convert.ToDateTime(tbx_date.Text);
@@ -150,7 +152,7 @@ namespace compserv
                 Update();
                 MessageBox.Show("Данные Добавлены");
             }
-            catch 
+            catch
             {
                 MessageBox.Show("Данные введены не коректно");
             }
@@ -187,7 +189,7 @@ namespace compserv
             }
             catch
             {
-                
+
                 MessageBox.Show("Поле не выбрано");
             }
         }
@@ -205,62 +207,81 @@ namespace compserv
             dataTable = Database(sql);
             Plan.ItemsSource = dataTable.DefaultView;
         }
+
         private void To_Excel(object sender, RoutedEventArgs e)
         {
-            //выводит информацию из datagrid в книгу Excel
-            //Excel.Application ExcelApp = new Excel.Application();
-            //ExcelApp.Application.Workbooks.Add(Type.Missing);
-            //ExcelApp.Visible = true;
-            //Объявляем приложение
-            Excel.Application ex = new Microsoft.Office.Interop.Excel.Application();
-            //Отобразить Excel
-            ex.Visible = true;
-            //Количество листов в рабочей книге
-            ex.SheetsInNewWorkbook = 2;
-            //Добавить рабочую книгу
-            Excel.Workbook workBook = ex.Workbooks.Add(Type.Missing);
-            //Отключить отображение окон с сообщениями
-            ex.DisplayAlerts = false;
-            //Получаем первый лист документа (счет начинается с 1)
-            Excel.Worksheet sheet = (Excel.Worksheet)ex.Worksheets.get_Item(1);
-            //Название листа (вкладки снизу)
-            sheet.Name = "Отчет";
-            //Пример заполнения ячеек
-            List<Visits> visits = db.Visits.ToList();
-            foreach (Visits visit in visits)
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            DataGrid dataGrid = Plan;
+            // Создаем диалог сохранения файла Excel
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            saveDialog.Filter = "Excel Files|*.xlsx";
+            saveDialog.Title = "Save an Excel File";
+            if (saveDialog.ShowDialog() == true)
             {
-                sheet.Cells[1, 1] = String.Format(tbx_number.Text);
-                sheet.Cells[1, 2] = String.Format(tbx_serv.Text);
-                sheet.Cells[1, 3] = String.Format(tbx_date.Text);
+                try
+                {
+                    // Создаем новый файл Excel
+                    var newFile = new FileInfo(saveDialog.FileName);
+
+                    // Создаем пакет Excel
+                    using (ExcelPackage package = new ExcelPackage(newFile))
+                    {
+                        // Создаем лист Excel
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                        // Заполняем заголовки столбцов
+
+                        int columnIndex = 1;
+                        foreach (DataGridColumn column in dataGrid.Columns)
+                        {
+                            worksheet.Cells[1, columnIndex].Value = column.Header;
+                            columnIndex++;
+                        }
+
+                        // Заполняем данные из DataGrid
+                        int rowIndex = 2;
+                        foreach (var item in dataGrid.Items)
+                        {
+                            columnIndex = 1;
+                            foreach (DataGridColumn column in dataGrid.Columns)
+                            {
+                                // Получаем содержимое ячейки
+                                var cellContent = column.GetCellContent(item);
+
+                                if (cellContent is TextBlock)
+                                {
+                                    worksheet.Cells[rowIndex, columnIndex].Value = (cellContent as TextBlock).Text;
+                                }
+                                else if (cellContent is CheckBox)
+                                {
+                                    worksheet.Cells[rowIndex, columnIndex].Value = (cellContent as CheckBox).IsChecked;
+                                }
+                                else if (cellContent is ComboBox)
+                                {
+                                    worksheet.Cells[rowIndex, columnIndex].Value = (cellContent as ComboBox).SelectedValue;
+                                }
+
+                                columnIndex++;
+                            }
+
+                            rowIndex++;
+                        }
+
+                        // Сохраняем пакет Excel
+                        package.Save();
+                    }
+
+                    MessageBox.Show("Export to Excel completed successfully.", "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error exporting to Excel: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            ////Захватываем диапазон ячеек
-            //Excel.Range range1 = sheet.get_Range(sheet.Cells[1, 1], sheet.Cells[9, 9]);
-            ////Шрифт для диапазона
-            //range1.Cells.Font.Name = "Tahoma";
-            ////Размер шрифта для диапазона
-            //range1.Cells.Font.Size = 10;
-            ////Захватываем другой диапазон ячеек
-            //Excel.Range range2 = sheet.get_Range(sheet.Cells[1, 1], sheet.Cells[9, 2]);
-            //range2.Cells.Font.Name = "Times New Roman";
-        
-
-            Plan.SelectAllCells();
-            Plan.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-            ApplicationCommands.Copy.Execute(null, Plan);
-            String resultat = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            String result = (string)Clipboard.GetData(DataFormats.Text);
-            Plan.UnselectAllCells();
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\tests\test.xls");
-            file.WriteLine(result.Replace(',', ' '));
-
-
-            MessageBox.Show(" Экспорт данных в созданный файл Excel прошел успешно");
-
-
-
         }
+
+       
     }
 }
-    
 
 

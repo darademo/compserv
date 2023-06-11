@@ -44,7 +44,7 @@ namespace compserv
         }
         private void Update()
         {
-            string sql = "SELECT Lname as 'Фамилия', Client.[Name] as 'Имя', SurName as 'Отчество', DateBirth as 'Дата рождения', Adress 'Адрес', PhonNumber as 'Телефон' FROM Client ;".ToString();
+            string sql = "SELECT ClientID as 'Номер', Lname as 'Фамилия', Client.[Name] as 'Имя', SurName as 'Отчество', DateBirth as 'Дата рождения', Adress 'Адрес', PhonNumber as 'Телефон' FROM Client ;".ToString();
             DataTable dataTable = new DataTable();
             dataTable = Database(sql);
             Plan.ItemsSource = dataTable.DefaultView;
@@ -93,7 +93,7 @@ namespace compserv
 
         private void btn_ref(object sender, RoutedEventArgs e)
         {
-
+            Update();
         }
     }
 }
