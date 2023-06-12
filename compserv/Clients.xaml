@@ -21,7 +21,7 @@
         <TextBox x:Name="tbx_adress" HorizontalAlignment="Left" Height="23" Margin="10,266,0,0" TextWrapping="Wrap" Text="Адрес" VerticalAlignment="Top" Width="120"/>
         <Button Click="btn_add" Content="Добавить" HorizontalAlignment="Left" Margin="31,294,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Click="btn_del" Content="Удалить" HorizontalAlignment="Left" Margin="31,318,0,0" VerticalAlignment="Top" Width="75"/>
-        <DataGrid x:Name="Plan" HorizontalAlignment="Left" Height="350" Margin="186,38,0,0" VerticalAlignment="Top" Width="582"/>
+        <DataGrid x:Name="Plan" HorizontalAlignment="Left" Height="350" Margin="186,38,0,0" VerticalAlignment="Top" Width="590"/>
         <Button  Click="btn_ref" Content="Обновить" HorizontalAlignment="Left" Margin="31,342,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>

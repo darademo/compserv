@@ -30,57 +30,10 @@ namespace compserv
 
         DBEntities db = new DBEntities();
         SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=ddbClone;Integrated Security=True");
-
-        public class ClassForGrid
-        {
-
-            public string VisitsID { get; set; }
-            public string ClientID { get; set; }
-            public string ServisID { get; set; }
-            public string DateVisit { get; set; }
-            public string Quantity_product { get; set; }
-            public string Date_manufacture { get; set; }
-
-            public ClassForGrid(string VisitsID, string ClietID, string ServisID, string DateVisit, string Quantity_product, string Date_manufacture)
-            {
-                this.VisitsID = VisitsID;
-                this.ClientID = ClientID;
-                this.ServisID = ServisID;
-                this.DateVisit = DateVisit;
-                this.Quantity_product = Quantity_product;
-                this.Date_manufacture = Date_manufacture;
-            }
-        }
-
         public MainWindow()
         {
             InitializeComponent();
             Update();
-        }
-
-
-        private void Plan_SelectionChanged1(object sender, SelectionChangedEventArgs e)
-        {
-            //вытаскивание значения из datagrid
-            //selected
-            try
-            {
-                var rowcontent = Plan.Columns[0].GetCellContent(Plan.SelectedItem);
-                var row1 = rowcontent != null ? rowcontent.Parent as System.Windows.Controls.DataGridCell : null;  //(переменная) = (условие) ? (значение если условие выполняется) : (значение если условие не выполняется)
-                string str = row1.ToString();
-                int selectedindex = Convert.ToInt32(str.Remove(0, 38));
-            }
-            catch
-            {
-                int selectedinedx = Convert.ToInt32(Plan.Columns[0].GetCellContent(Plan.SelectedItem).Parent.ToString().Remove(0, 38));
-                var row = db.Visits.Where(w => w.VisitsID == selectedinedx).FirstOrDefault();
-                tbx_number.Text = row.ClientID.ToString();
-                tbx_serv.Text = row.ServisID.ToString();
-                tbx_date.Text = row.DateVisit.ToString();
-
-
-            }
-
         }
         public DataTable Database(string sql)
         {
@@ -90,13 +43,13 @@ namespace compserv
             adapter.Fill(dataTable);
             con.Close();
             return dataTable;
-
         }
 
         public void Update()
         {
-            string sql = "  SELECT VisitsID AS 'Номер', Client.LName as 'Клиент Ф', Client.[Name] as 'И', Client.SurName as 'О', [Services].Name 'Услуга' ,DateVisit as 'Дата' FROM Visits  INNER JOIN Client on Visits.ClientID = Client.ClientID   INNER JOIN [Services] on [Services].ServicesID = Visits.ServisID ";
-
+            string sql = "SELECT VisitsID AS 'Номер', Client.LName as 'Клиент Ф', Client.[Name] as 'И', Client.SurName as 'О', " +
+                "[Services].Name 'Услуга' ,DateVisit as 'Дата' FROM Visits  INNER JOIN Client on Visits.ClientID = Client.ClientID " +
+                "INNER JOIN [Services] on [Services].ServicesID = Visits.ServisID ";
             SqlDataAdapter adapter = new SqlDataAdapter(sql, con);
             DataTable dataTable = new DataTable("Table");
             adapter.Fill(dataTable);
@@ -137,7 +90,6 @@ namespace compserv
             dataTable = Database(sql);
             Plan.ItemsSource = dataTable.DefaultView;
         }
-
         private void btn_add(object sender, RoutedEventArgs e)
         {
             try
@@ -155,6 +107,22 @@ namespace compserv
             catch
             {
                 MessageBox.Show("Данные введены не коректно");
+            }
+        }
+        private void btn_del(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int selectedinedx = Convert.ToInt32(Plan.Columns[0].GetCellContent(Plan.SelectedItem).Parent.ToString().Remove(0, 38));
+                var row = db.Visits.Where(w => w.VisitsID == selectedinedx).FirstOrDefault();
+                db.Visits.Remove(row);
+                db.SaveChanges();
+                Update();
+                MessageBox.Show("Данные скрыты");
+            }
+            catch
+            {
+                MessageBox.Show("Поле не выбрано");
             }
         }
         private void btn_edit(object sender, RoutedEventArgs e)
@@ -176,24 +144,6 @@ namespace compserv
             }
         }
 
-        private void btn_del(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int selectedinedx = Convert.ToInt32(Plan.Columns[0].GetCellContent(Plan.SelectedItem).Parent.ToString().Remove(0, 38));
-                var row = db.Visits.Where(w => w.VisitsID == selectedinedx).FirstOrDefault();
-                db.Visits.Remove(row);
-                db.SaveChanges();
-                Update();
-                MessageBox.Show("Данные скрыты");
-            }
-            catch
-            {
-
-                MessageBox.Show("Поле не выбрано");
-            }
-        }
-
         private void btn_ref(object sender, RoutedEventArgs e)
         {
             Update();
@@ -203,13 +153,16 @@ namespace compserv
         {
             string sql;
             DataTable dataTable = new DataTable();
-            sql = " SELECT VisitsID AS 'Номер', Client.LName as 'Клиент Ф', Client.[Name] as 'И', Client.SurName as 'О' , [Services].Name 'Услуга' ,DateVisit as 'Дата' FROM Visits  INNER JOIN Client on Visits.ClientID = Client.ClientID   INNER JOIN [Services] on [Services].ServicesID = Visits.ServisID   WHERE Client.Lname Like '%" + tbxPoisk.Text + "%'";
+            sql = " SELECT VisitsID AS 'Номер', Client.LName as 'Клиент Ф', Client.[Name] as 'И', Client.SurName as 'О' , " +
+                "[Services].Name 'Услуга' ,DateVisit as 'Дата' FROM Visits  INNER JOIN Client on Visits.ClientID = Client.ClientID  " +
+                " INNER JOIN [Services] on [Services].ServicesID = Visits.ServisID   WHERE Client.Lname Like '%" + tbxPoisk.Text + "%'";
             dataTable = Database(sql);
             Plan.ItemsSource = dataTable.DefaultView;
         }
 
         private void To_Excel(object sender, RoutedEventArgs e)
         {
+            
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             DataGrid dataGrid = Plan;
             // Создаем диалог сохранения файла Excel
@@ -279,8 +232,6 @@ namespace compserv
                 }
             }
         }
-
-       
     }
 }
 

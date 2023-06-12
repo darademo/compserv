@@ -24,9 +24,7 @@
         <DataGrid x:Name="Plan" ItemsSource="{Binding}" AutoGenerateColumns="True"
                   CanUserReorderColumns="True" Visibility="Visible" HorizontalAlignment="Left" 
                   Height="257" Margin="274,100,0,0" VerticalAlignment="Top" Width="510">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Номер" Binding="{Binding Path=, VisitID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </DataGrid.Columns>-->
+            
         </DataGrid>
         <TextBox x:Name="tbx_number" HorizontalAlignment="Left" Height="23" Margin="145,113,0,0" TextWrapping="Wrap" Text="Номер клиента" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="tbx_date" HorizontalAlignment="Left" Height="23" Margin="145,146,0,0" TextWrapping="Wrap" Text="Дата" VerticalAlignment="Top" Width="120"/>

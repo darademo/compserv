@@ -247,7 +247,6 @@
     <Compile Include="Employ.cs">
       <DependentUpon>geadb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Excel_Export.cs" />
     <Compile Include="geadb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

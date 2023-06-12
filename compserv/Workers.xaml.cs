@@ -112,7 +112,7 @@ namespace compserv
 
         private void btn_ref(object sender, RoutedEventArgs e)
         {
-
+            Update();
         }
 
         
